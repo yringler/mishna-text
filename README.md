@@ -1,6 +1,6 @@
 # mishna-text
 
-Hebrew and English text for the entire Mishnah, organized by seder → tractate → perek → mishna. Data sourced from the [Sefaria](https://www.sefaria.org) API.
+Hebrew and English text for the entire Mishnah — all 63 tractates — organized by perek and mishna. Data sourced from the [Sefaria](https://www.sefaria.org) API.
 
 ## Installation
 
@@ -10,36 +10,53 @@ npm install mishna-text
 
 ## Usage
 
-### TypeScript / ESM
+### Named imports (TypeScript / ESM)
 
 ```ts
-import { ZERAIM, MOED, NASHIM, NEZIKIN, KODASHIM, TAHOROT, ALL_SEDARIM } from "mishna-text";
-import type { Seder, Tractate, Perek, Mishna } from "mishna-text";
+import { BERAKHOT, AVOT, KIDDUSHIN } from "mishna-text";
+import type { Tractate, Perek, Mishna } from "mishna-text";
 
-// Navigate the hierarchy
-const berakhot = ZERAIM.tractates.find(t => t.name === "Berakhot")!;
-const perekAleph = berakhot.perakim[0];         // chapter 1 (0-indexed array, 1-indexed .perek)
-const mishnaAleph = perekAleph.mishnayot[0];    // mishna 1
+const perekAleph  = BERAKHOT.perakim[0];       // chapter 1 (0-indexed array, 1-indexed .perek)
+const mishnaAleph = perekAleph.mishnayot[0];   // mishna 1
 
 console.log(mishnaAleph.hebrew);   // מֵאֵימָתַי קוֹרִין אֶת שְׁמַע...
 console.log(mishnaAleph.english);  // From when may one recite Shema...
+console.log(BERAKHOT.seder);       // "Zeraim"
 ```
 
 ### CommonJS
 
 ```js
-const { ZERAIM, ALL_SEDARIM } = require("mishna-text");
+const { BERAKHOT, AVOT, ALL_TRACTATES } = require("mishna-text");
 ```
 
-### Raw JSON (subpath imports)
+### Direct JSON imports (subpath)
+
+Each tractate is available as a standalone JSON file:
 
 ```ts
-import zeraim   from "mishna-text/zeraim";
-import moed     from "mishna-text/moed";
-import nashim   from "mishna-text/nashim";
-import nezikin  from "mishna-text/nezikin";
-import kodashim from "mishna-text/kodashim";
-import tahorot  from "mishna-text/tahorot";
+import berakhot    from "mishna-text/berakhot";
+import avot        from "mishna-text/avot";
+import maasarSheni from "mishna-text/maaser-sheni";
+import bavaBatra   from "mishna-text/bava-batra";
+```
+
+### All tractates
+
+```ts
+import { ALL_TRACTATES, SEDARIM } from "mishna-text";
+
+// Iterate every mishna in the entire Mishnah
+for (const tractate of ALL_TRACTATES) {
+  for (const perek of tractate.perakim) {
+    for (const mishna of perek.mishnayot) {
+      // mishna.hebrew, mishna.english
+    }
+  }
+}
+
+// SEDARIM gives seder-level metadata (name, hebrewName, tractate list)
+// without the full text — useful for navigation UIs
 ```
 
 ## Data structure
@@ -57,38 +74,103 @@ interface Perek {
 }
 
 interface Tractate {
-  name:       string;   // e.g. "Berakhot"
-  hebrewName: string;   // e.g. "ברכות"
-  sefariaId:  string;   // e.g. "Mishnah_Berakhot"
-  perakim:    Perek[];
-}
-
-interface Seder {
-  name:       string;   // e.g. "Zeraim"
-  hebrewName: string;   // e.g. "זרעים"
-  tractates:  Tractate[];
+  name:             string;   // e.g. "Berakhot"
+  hebrewName:       string;   // e.g. "ברכות"
+  sefariaId:        string;   // e.g. "Mishnah_Berakhot"
+  seder:            string;   // e.g. "Zeraim"
+  sederHebrewName:  string;   // e.g. "זרעים"
+  perakim:          Perek[];
 }
 ```
 
-## Sedarim and tractates
+## Tractate reference
 
-| Seder | Tractates |
-|---|---|
-| Zeraim (זרעים) | Berakhot, Peah, Demai, Kilayim, Sheviit, Terumot, Maasrot, Maaser Sheni, Challah, Orlah, Bikkurim |
-| Moed (מועד) | Shabbat, Eruvin, Pesachim, Shekalim, Yoma, Sukkah, Beitzah, Rosh Hashanah, Taanit, Megillah, Moed Katan, Chagigah |
-| Nashim (נשים) | Yevamot, Ketubot, Nedarim, Nazir, Sotah, Gittin, Kiddushin |
-| Nezikin (נזיקין) | Bava Kamma, Bava Metzia, Bava Batra, Sanhedrin, Makkot, Shevuot, Eduyot, Avodah Zarah, Avot, Horayot |
-| Kodashim (קדשים) | Zevachim, Menachot, Chullin, Bekhorot, Arakhin, Temurah, Keritot, Meilah, Tamid, Middot, Kinnim |
-| Tahorot (טהרות) | Keilim, Ohalot, Negaim, Parah, Tahorot, Mikvaot, Niddah, Makhshirin, Zavim, Tevul Yom, Yadayim, Oktzin |
+All 63 tractates, grouped by seder:
+
+| Seder | Named export | Subpath |
+|---|---|---|
+| **Zeraim (זרעים)** | | |
+| Berakhot | `BERAKHOT` | `mishna-text/berakhot` |
+| Peah | `PEAH` | `mishna-text/peah` |
+| Demai | `DEMAI` | `mishna-text/demai` |
+| Kilayim | `KILAYIM` | `mishna-text/kilayim` |
+| Sheviit | `SHEVIIT` | `mishna-text/sheviit` |
+| Terumot | `TERUMOT` | `mishna-text/terumot` |
+| Maasrot | `MAASROT` | `mishna-text/maasrot` |
+| Maaser Sheni | `MAASER_SHENI` | `mishna-text/maaser-sheni` |
+| Challah | `CHALLAH` | `mishna-text/challah` |
+| Orlah | `ORLAH` | `mishna-text/orlah` |
+| Bikkurim | `BIKKURIM` | `mishna-text/bikkurim` |
+| **Moed (מועד)** | | |
+| Shabbat | `SHABBAT` | `mishna-text/shabbat` |
+| Eruvin | `ERUVIN` | `mishna-text/eruvin` |
+| Pesachim | `PESACHIM` | `mishna-text/pesachim` |
+| Shekalim | `SHEKALIM` | `mishna-text/shekalim` |
+| Yoma | `YOMA` | `mishna-text/yoma` |
+| Sukkah | `SUKKAH` | `mishna-text/sukkah` |
+| Beitzah | `BEITZAH` | `mishna-text/beitzah` |
+| Rosh Hashanah | `ROSH_HASHANAH` | `mishna-text/rosh-hashanah` |
+| Taanit | `TAANIT` | `mishna-text/taanit` |
+| Megillah | `MEGILLAH` | `mishna-text/megillah` |
+| Moed Katan | `MOED_KATAN` | `mishna-text/moed-katan` |
+| Chagigah | `CHAGIGAH` | `mishna-text/chagigah` |
+| **Nashim (נשים)** | | |
+| Yevamot | `YEVAMOT` | `mishna-text/yevamot` |
+| Ketubot | `KETUBOT` | `mishna-text/ketubot` |
+| Nedarim | `NEDARIM` | `mishna-text/nedarim` |
+| Nazir | `NAZIR` | `mishna-text/nazir` |
+| Sotah | `SOTAH` | `mishna-text/sotah` |
+| Gittin | `GITTIN` | `mishna-text/gittin` |
+| Kiddushin | `KIDDUSHIN` | `mishna-text/kiddushin` |
+| **Nezikin (נזיקין)** | | |
+| Bava Kamma | `BAVA_KAMMA` | `mishna-text/bava-kamma` |
+| Bava Metzia | `BAVA_METZIA` | `mishna-text/bava-metzia` |
+| Bava Batra | `BAVA_BATRA` | `mishna-text/bava-batra` |
+| Sanhedrin | `SANHEDRIN` | `mishna-text/sanhedrin` |
+| Makkot | `MAKKOT` | `mishna-text/makkot` |
+| Shevuot | `SHEVUOT` | `mishna-text/shevuot` |
+| Eduyot | `EDUYOT` | `mishna-text/eduyot` |
+| Avodah Zarah | `AVODAH_ZARAH` | `mishna-text/avodah-zarah` |
+| Avot | `AVOT` | `mishna-text/avot` |
+| Horayot | `HORAYOT` | `mishna-text/horayot` |
+| **Kodashim (קדשים)** | | |
+| Zevachim | `ZEVACHIM` | `mishna-text/zevachim` |
+| Menachot | `MENACHOT` | `mishna-text/menachot` |
+| Chullin | `CHULLIN` | `mishna-text/chullin` |
+| Bekhorot | `BEKHOROT` | `mishna-text/bekhorot` |
+| Arakhin | `ARAKHIN` | `mishna-text/arakhin` |
+| Temurah | `TEMURAH` | `mishna-text/temurah` |
+| Keritot | `KERITOT` | `mishna-text/keritot` |
+| Meilah | `MEILAH` | `mishna-text/meilah` |
+| Tamid | `TAMID` | `mishna-text/tamid` |
+| Middot | `MIDDOT` | `mishna-text/middot` |
+| Kinnim | `KINNIM` | `mishna-text/kinnim` |
+| **Tahorot (טהרות)** | | |
+| Keilim | `KEILIM` | `mishna-text/keilim` |
+| Ohalot | `OHALOT` | `mishna-text/ohalot` |
+| Negaim | `NEGAIM` | `mishna-text/negaim` |
+| Parah | `PARAH` | `mishna-text/parah` |
+| Tahorot | `TAHOROT` | `mishna-text/tahorot` |
+| Mikvaot | `MIKVAOT` | `mishna-text/mikvaot` |
+| Niddah | `NIDDAH` | `mishna-text/niddah` |
+| Makhshirin | `MAKHSHIRIN` | `mishna-text/makhshirin` |
+| Zavim | `ZAVIM` | `mishna-text/zavim` |
+| Tevul Yom | `TEVUL_YOM` | `mishna-text/tevul-yom` |
+| Yadayim | `YADAYIM` | `mishna-text/yadayim` |
+| Oktzin | `OKTZIN` | `mishna-text/oktzin` |
 
 ## Rebuilding the data
 
 ```bash
-npm run download   # fetches from Sefaria API (~25 min, rate-limited)
+npm run download   # fetches from Sefaria API (~25 min, rate-limited to 300ms/request)
 npm run build      # rebuilds dist/
 ```
 
-To use a different English version, set `SEFARIA_EN_VERSION` to the Sefaria version title before running the download script.
+To use a different English version, set `SEFARIA_EN_VERSION` to the Sefaria version title:
+
+```bash
+SEFARIA_EN_VERSION="Herbert Danby" npm run download
+```
 
 ---
 
@@ -106,9 +188,9 @@ The English translation included in this package is the **William Davidson Editi
 - **License:** [Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)](https://creativecommons.org/licenses/by-nc/4.0/)
 - **Source:** [Koren Publishers](https://korenpub.com) via [Sefaria](https://www.sefaria.org)
 
-**This license permits sharing and adapting the text for non-commercial purposes only, provided that appropriate credit is given.** If you intend to use this package in a commercial product, you must obtain a separate license from [Koren Publishers](https://korenpub.com).
+**This license permits sharing and adapting the text for non-commercial purposes only, provided that appropriate credit is given.** If you intend to use this package in a commercial product, you must obtain a separate license directly from [Koren Publishers](https://korenpub.com).
 
-Attribution for the English text must include:
+Required attribution for the English text:
 > English translation: William Davidson Edition, © Koren Publishers Jerusalem Ltd., via Sefaria (sefaria.org). Licensed under CC BY-NC 4.0.
 
 ### Hebrew text — Torat Emet
@@ -120,4 +202,4 @@ The Hebrew text is sourced from **Torat Emet** (תורת אמת), a vocalized Mi
 
 ### This package
 
-The code in this repository (everything except the text content in `data/`) is released under the [MIT License](https://opensource.org/licenses/MIT).
+The code in this repository (everything outside of `data/`) is released under the [MIT License](https://opensource.org/licenses/MIT).

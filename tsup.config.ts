@@ -1,4 +1,9 @@
 import { defineConfig } from "tsup";
+import { SEDARIM } from "./src/tractates.js";
+
+const jsonExternals = SEDARIM.flatMap((s) =>
+  s.tractates.map((t) => `../data/${t.key}.json`)
+);
 
 export default defineConfig({
   entry: ["src/index.ts"],
@@ -6,12 +11,5 @@ export default defineConfig({
   dts: true,
   clean: true,
   splitting: false,
-  external: [
-    "../data/zeraim.json",
-    "../data/moed.json",
-    "../data/nashim.json",
-    "../data/nezikin.json",
-    "../data/kodashim.json",
-    "../data/tahorot.json",
-  ],
+  external: jsonExternals,
 });

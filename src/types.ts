@@ -13,11 +13,7 @@ export interface Tractate {
   name: string;
   hebrewName: string;
   sefariaId: string;
+  seder: string;
+  sederHebrewName: string;
   perakim: Perek[];
-}
-
-export interface Seder {
-  name: string;
-  hebrewName: string;
-  tractates: Tractate[];
 }

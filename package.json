@@ -1,46 +1,103 @@
 {
-    "name": "mishna-text",
-    "version": "1.0.1",
-    "description": "Hebrew and English text for all Mishna, organized by seder, tractate, perek, and mishna",
-    "type": "module",
-    "main": "./dist/index.cjs",
-    "module": "./dist/index.js",
-    "types": "./dist/index.d.ts",
-    "exports": {
-        ".": {
-            "types": "./dist/index.d.ts",
-            "import": "./dist/index.js",
-            "require": "./dist/index.cjs"
-        },
-        "./zeraim": "./data/zeraim.json",
-        "./moed": "./data/moed.json",
-        "./nashim": "./data/nashim.json",
-        "./nezikin": "./data/nezikin.json",
-        "./kodashim": "./data/kodashim.json",
-        "./tahorot": "./data/tahorot.json"
+  "name": "mishna-text",
+  "version": "1.0.1",
+  "description": "Hebrew and English text for all Mishna, organized by tractate, perek, and mishna",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types":   "./dist/index.d.ts",
+      "import":  "./dist/index.js",
+      "require": "./dist/index.cjs"
     },
-    "files": [
-        "dist",
-        "data"
-    ],
-    "scripts": {
-        "build": "tsup",
-        "download": "tsx scripts/download.ts",
-        "typecheck": "tsc --noEmit"
-    },
-    "keywords": [
-        "mishna",
-        "mishnah",
-        "torah",
-        "jewish",
-        "hebrew",
-        "sefaria"
-    ],
-    "license": "MIT",
-    "devDependencies": {
-        "@types/node": "^25.9.1",
-        "tsup": "^8.0.0",
-        "tsx": "^4.0.0",
-        "typescript": "^5.0.0"
-    }
+    "./berakhot":     "./data/berakhot.json",
+    "./peah":         "./data/peah.json",
+    "./demai":        "./data/demai.json",
+    "./kilayim":      "./data/kilayim.json",
+    "./sheviit":      "./data/sheviit.json",
+    "./terumot":      "./data/terumot.json",
+    "./maasrot":      "./data/maasrot.json",
+    "./maaser-sheni": "./data/maaser-sheni.json",
+    "./challah":      "./data/challah.json",
+    "./orlah":        "./data/orlah.json",
+    "./bikkurim":     "./data/bikkurim.json",
+    "./shabbat":      "./data/shabbat.json",
+    "./eruvin":       "./data/eruvin.json",
+    "./pesachim":     "./data/pesachim.json",
+    "./shekalim":     "./data/shekalim.json",
+    "./yoma":         "./data/yoma.json",
+    "./sukkah":       "./data/sukkah.json",
+    "./beitzah":      "./data/beitzah.json",
+    "./rosh-hashanah":"./data/rosh-hashanah.json",
+    "./taanit":       "./data/taanit.json",
+    "./megillah":     "./data/megillah.json",
+    "./moed-katan":   "./data/moed-katan.json",
+    "./chagigah":     "./data/chagigah.json",
+    "./yevamot":      "./data/yevamot.json",
+    "./ketubot":      "./data/ketubot.json",
+    "./nedarim":      "./data/nedarim.json",
+    "./nazir":        "./data/nazir.json",
+    "./sotah":        "./data/sotah.json",
+    "./gittin":       "./data/gittin.json",
+    "./kiddushin":    "./data/kiddushin.json",
+    "./bava-kamma":   "./data/bava-kamma.json",
+    "./bava-metzia":  "./data/bava-metzia.json",
+    "./bava-batra":   "./data/bava-batra.json",
+    "./sanhedrin":    "./data/sanhedrin.json",
+    "./makkot":       "./data/makkot.json",
+    "./shevuot":      "./data/shevuot.json",
+    "./eduyot":       "./data/eduyot.json",
+    "./avodah-zarah": "./data/avodah-zarah.json",
+    "./avot":         "./data/avot.json",
+    "./horayot":      "./data/horayot.json",
+    "./zevachim":     "./data/zevachim.json",
+    "./menachot":     "./data/menachot.json",
+    "./chullin":      "./data/chullin.json",
+    "./bekhorot":     "./data/bekhorot.json",
+    "./arakhin":      "./data/arakhin.json",
+    "./temurah":      "./data/temurah.json",
+    "./keritot":      "./data/keritot.json",
+    "./meilah":       "./data/meilah.json",
+    "./tamid":        "./data/tamid.json",
+    "./middot":       "./data/middot.json",
+    "./kinnim":       "./data/kinnim.json",
+    "./keilim":       "./data/keilim.json",
+    "./ohalot":       "./data/ohalot.json",
+    "./negaim":       "./data/negaim.json",
+    "./parah":        "./data/parah.json",
+    "./tahorot":      "./data/tahorot.json",
+    "./mikvaot":      "./data/mikvaot.json",
+    "./niddah":       "./data/niddah.json",
+    "./makhshirin":   "./data/makhshirin.json",
+    "./zavim":        "./data/zavim.json",
+    "./tevul-yom":    "./data/tevul-yom.json",
+    "./yadayim":      "./data/yadayim.json",
+    "./oktzin":       "./data/oktzin.json"
+  },
+  "files": [
+    "dist",
+    "data"
+  ],
+  "scripts": {
+    "build":     "tsup",
+    "download":  "tsx scripts/download.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "mishna",
+    "mishnah",
+    "torah",
+    "jewish",
+    "hebrew",
+    "sefaria"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^25.9.1",
+    "tsup": "^8.0.0",
+    "tsx": "^4.0.0",
+    "typescript": "^5.0.0"
+  }
 }
