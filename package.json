@@ -12,6 +12,11 @@
       "import":  "./dist/index.js",
       "require": "./dist/index.cjs"
     },
+    "./tractate-index": {
+      "types":   "./dist/tractate-index.d.ts",
+      "import":  "./dist/tractate-index.js",
+      "require": "./dist/tractate-index.cjs"
+    },
     "./berakhot":     "./data/berakhot.json",
     "./peah":         "./data/peah.json",
     "./demai":        "./data/demai.json",
