@@ -16,7 +16,7 @@ export async function getTractate(base: string, englishName: string): Promise<Tr
   if (tractateCache[englishName]) {
     return tractateCache[englishName];
   }
-  const { default: tractate } = await import(`${base}/${fileName}`, { assert: { type: "json" } });
-  tractateCache[englishName] = tractate as Tractate;
+  const tractate = await fetch(`${base}/${fileName}`).then(r => r.json()) as Tractate;
+  tractateCache[englishName] = tractate;
   return tractateCache[englishName];
 }
