@@ -1,6 +1,6 @@
 {
     "name": "mishna-text",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "description": "Hebrew and English text for all Mishna, organized by tractate, perek, and mishna",
     "type": "module",
     "main": "./dist/index.cjs",
