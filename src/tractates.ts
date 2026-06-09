@@ -1,3 +1,5 @@
+import { createRequire } from "module";
+
 export interface TractateDefinition {
   name: string;
   hebrewName: string;
@@ -12,104 +14,7 @@ export interface SederDefinition {
   tractates: TractateDefinition[];
 }
 
-export const SEDARIM: SederDefinition[] = [
-  {
-    name: "Zeraim",
-    hebrewName: "זרעים",
-    tractates: [
-      { name: "Berakhot",    hebrewName: "ברכות",    sefariaId: "Mishnah_Berakhot",    key: "berakhot",    exportName: "BERAKHOT" },
-      { name: "Peah",        hebrewName: "פאה",       sefariaId: "Mishnah_Peah",        key: "peah",        exportName: "PEAH" },
-      { name: "Demai",       hebrewName: "דמאי",      sefariaId: "Mishnah_Demai",       key: "demai",       exportName: "DEMAI" },
-      { name: "Kilayim",     hebrewName: "כלאיים",    sefariaId: "Mishnah_Kilayim",     key: "kilayim",     exportName: "KILAYIM" },
-      { name: "Sheviit",     hebrewName: "שביעית",    sefariaId: "Mishnah_Sheviit",     key: "sheviit",     exportName: "SHEVIIT" },
-      { name: "Terumot",     hebrewName: "תרומות",    sefariaId: "Mishnah_Terumot",     key: "terumot",     exportName: "TERUMOT" },
-      { name: "Maasrot",     hebrewName: "מעשרות",    sefariaId: "Mishnah_Maasrot",     key: "maasrot",     exportName: "MAASROT" },
-      { name: "Maaser Sheni",hebrewName: "מעשר שני",  sefariaId: "Mishnah_Maaser_Sheni",key: "maaser-sheni",exportName: "MAASER_SHENI" },
-      { name: "Challah",     hebrewName: "חלה",       sefariaId: "Mishnah_Challah",     key: "challah",     exportName: "CHALLAH" },
-      { name: "Orlah",       hebrewName: "ערלה",      sefariaId: "Mishnah_Orlah",       key: "orlah",       exportName: "ORLAH" },
-      { name: "Bikkurim",    hebrewName: "ביכורים",   sefariaId: "Mishnah_Bikkurim",    key: "bikkurim",    exportName: "BIKKURIM" },
-    ],
-  },
-  {
-    name: "Moed",
-    hebrewName: "מועד",
-    tractates: [
-      { name: "Shabbat",      hebrewName: "שבת",       sefariaId: "Mishnah_Shabbat",      key: "shabbat",      exportName: "SHABBAT" },
-      { name: "Eruvin",       hebrewName: "עירובין",   sefariaId: "Mishnah_Eruvin",       key: "eruvin",       exportName: "ERUVIN" },
-      { name: "Pesachim",     hebrewName: "פסחים",     sefariaId: "Mishnah_Pesachim",     key: "pesachim",     exportName: "PESACHIM" },
-      { name: "Shekalim",     hebrewName: "שקלים",     sefariaId: "Mishnah_Shekalim",     key: "shekalim",     exportName: "SHEKALIM" },
-      { name: "Yoma",         hebrewName: "יומא",      sefariaId: "Mishnah_Yoma",         key: "yoma",         exportName: "YOMA" },
-      { name: "Sukkah",       hebrewName: "סוכה",      sefariaId: "Mishnah_Sukkah",       key: "sukkah",       exportName: "SUKKAH" },
-      { name: "Beitzah",      hebrewName: "ביצה",      sefariaId: "Mishnah_Beitzah",      key: "beitzah",      exportName: "BEITZAH" },
-      { name: "Rosh Hashanah",hebrewName: "ראש השנה",  sefariaId: "Mishnah_Rosh_Hashanah",key: "rosh-hashanah",exportName: "ROSH_HASHANAH" },
-      { name: "Taanit",       hebrewName: "תענית",     sefariaId: "Mishnah_Taanit",       key: "taanit",       exportName: "TAANIT" },
-      { name: "Megillah",     hebrewName: "מגילה",     sefariaId: "Mishnah_Megillah",     key: "megillah",     exportName: "MEGILLAH" },
-      { name: "Moed Katan",   hebrewName: "מועד קטן",  sefariaId: "Mishnah_Moed_Katan",   key: "moed-katan",   exportName: "MOED_KATAN" },
-      { name: "Chagigah",     hebrewName: "חגיגה",     sefariaId: "Mishnah_Chagigah",     key: "chagigah",     exportName: "CHAGIGAH" },
-    ],
-  },
-  {
-    name: "Nashim",
-    hebrewName: "נשים",
-    tractates: [
-      { name: "Yevamot",   hebrewName: "יבמות",   sefariaId: "Mishnah_Yevamot",   key: "yevamot",   exportName: "YEVAMOT" },
-      { name: "Ketubot",   hebrewName: "כתובות",  sefariaId: "Mishnah_Ketubot",   key: "ketubot",   exportName: "KETUBOT" },
-      { name: "Nedarim",   hebrewName: "נדרים",   sefariaId: "Mishnah_Nedarim",   key: "nedarim",   exportName: "NEDARIM" },
-      { name: "Nazir",     hebrewName: "נזיר",    sefariaId: "Mishnah_Nazir",     key: "nazir",     exportName: "NAZIR" },
-      { name: "Sotah",     hebrewName: "סוטה",    sefariaId: "Mishnah_Sotah",     key: "sotah",     exportName: "SOTAH" },
-      { name: "Gittin",    hebrewName: "גיטין",   sefariaId: "Mishnah_Gittin",    key: "gittin",    exportName: "GITTIN" },
-      { name: "Kiddushin", hebrewName: "קידושין", sefariaId: "Mishnah_Kiddushin", key: "kiddushin", exportName: "KIDDUSHIN" },
-    ],
-  },
-  {
-    name: "Nezikin",
-    hebrewName: "נזיקין",
-    tractates: [
-      { name: "Bava Kamma",  hebrewName: "בבא קמא",  sefariaId: "Mishnah_Bava_Kamma",  key: "bava-kamma",  exportName: "BAVA_KAMMA" },
-      { name: "Bava Metzia", hebrewName: "בבא מציעא", sefariaId: "Mishnah_Bava_Metzia", key: "bava-metzia", exportName: "BAVA_METZIA" },
-      { name: "Bava Batra",  hebrewName: "בבא בתרא",  sefariaId: "Mishnah_Bava_Batra",  key: "bava-batra",  exportName: "BAVA_BATRA" },
-      { name: "Sanhedrin",   hebrewName: "סנהדרין",   sefariaId: "Mishnah_Sanhedrin",   key: "sanhedrin",   exportName: "SANHEDRIN" },
-      { name: "Makkot",      hebrewName: "מכות",      sefariaId: "Mishnah_Makkot",      key: "makkot",      exportName: "MAKKOT" },
-      { name: "Shevuot",     hebrewName: "שבועות",    sefariaId: "Mishnah_Shevuot",     key: "shevuot",     exportName: "SHEVUOT" },
-      { name: "Eduyot",      hebrewName: "עדויות",    sefariaId: "Mishnah_Eduyot",      key: "eduyot",      exportName: "EDUYOT" },
-      { name: "Avodah Zarah",hebrewName: "עבודה זרה", sefariaId: "Mishnah_Avodah_Zarah",key: "avodah-zarah",exportName: "AVODAH_ZARAH" },
-      { name: "Avot",        hebrewName: "אבות",      sefariaId: "Mishnah_Avot",        key: "avot",        exportName: "AVOT" },
-      { name: "Horayot",     hebrewName: "הוריות",    sefariaId: "Mishnah_Horayot",     key: "horayot",     exportName: "HORAYOT" },
-    ],
-  },
-  {
-    name: "Kodashim",
-    hebrewName: "קדשים",
-    tractates: [
-      { name: "Zevachim", hebrewName: "זבחים",  sefariaId: "Mishnah_Zevachim",  key: "zevachim", exportName: "ZEVACHIM" },
-      { name: "Menachot", hebrewName: "מנחות",  sefariaId: "Mishnah_Menachot",  key: "menachot", exportName: "MENACHOT" },
-      { name: "Chullin",  hebrewName: "חולין",  sefariaId: "Mishnah_Chullin",   key: "chullin",  exportName: "CHULLIN" },
-      { name: "Bekhorot", hebrewName: "בכורות", sefariaId: "Mishnah_Bekhorot",  key: "bekhorot", exportName: "BEKHOROT" },
-      { name: "Arakhin",  hebrewName: "ערכין",  sefariaId: "Mishnah_Arakhin",   key: "arakhin",  exportName: "ARAKHIN" },
-      { name: "Temurah",  hebrewName: "תמורה",  sefariaId: "Mishnah_Temurah",   key: "temurah",  exportName: "TEMURAH" },
-      { name: "Keritot",  hebrewName: "כריתות", sefariaId: "Mishnah_Keritot",   key: "keritot",  exportName: "KERITOT" },
-      { name: "Meilah",   hebrewName: "מעילה",  sefariaId: "Mishnah_Meilah",    key: "meilah",   exportName: "MEILAH" },
-      { name: "Tamid",    hebrewName: "תמיד",   sefariaId: "Mishnah_Tamid",     key: "tamid",    exportName: "TAMID" },
-      { name: "Middot",   hebrewName: "מידות",  sefariaId: "Mishnah_Middot",    key: "middot",   exportName: "MIDDOT" },
-      { name: "Kinnim",   hebrewName: "קינים",  sefariaId: "Mishnah_Kinnim",    key: "kinnim",   exportName: "KINNIM" },
-    ],
-  },
-  {
-    name: "Tahorot",
-    hebrewName: "טהרות",
-    tractates: [
-      { name: "Keilim",     hebrewName: "כלים",    sefariaId: "Mishnah_Keilim",     key: "keilim",     exportName: "KEILIM" },
-      { name: "Ohalot",     hebrewName: "אהלות",   sefariaId: "Mishnah_Ohalot",     key: "ohalot",     exportName: "OHALOT" },
-      { name: "Negaim",     hebrewName: "נגעים",   sefariaId: "Mishnah_Negaim",     key: "negaim",     exportName: "NEGAIM" },
-      { name: "Parah",      hebrewName: "פרה",     sefariaId: "Mishnah_Parah",      key: "parah",      exportName: "PARAH" },
-      { name: "Tahorot",    hebrewName: "טהרות",   sefariaId: "Mishnah_Tahorot",    key: "tahorot",    exportName: "TAHOROT" },
-      { name: "Mikvaot",    hebrewName: "מקוואות", sefariaId: "Mishnah_Mikvaot",    key: "mikvaot",    exportName: "MIKVAOT" },
-      { name: "Niddah",     hebrewName: "נידה",    sefariaId: "Mishnah_Niddah",     key: "niddah",     exportName: "NIDDAH" },
-      { name: "Makhshirin", hebrewName: "מכשירין", sefariaId: "Mishnah_Makhshirin", key: "makhshirin", exportName: "MAKHSHIRIN" },
-      { name: "Zavim",      hebrewName: "זבים",    sefariaId: "Mishnah_Zavim",      key: "zavim",      exportName: "ZAVIM" },
-      { name: "Tevul Yom",  hebrewName: "טבול יום",sefariaId: "Mishnah_Tevul_Yom",  key: "tevul-yom",  exportName: "TEVUL_YOM" },
-      { name: "Yadayim",    hebrewName: "ידים",    sefariaId: "Mishnah_Yadayim",    key: "yadayim",    exportName: "YADAYIM" },
-      { name: "Oktzin",     hebrewName: "עוקצין",  sefariaId: "Mishnah_Oktzin",     key: "oktzin",     exportName: "OKTZIN" },
-    ],
-  },
-];
+const _require = createRequire(import.meta.url);
+
+// Generated from the Sefaria table of contents by `scripts/download.ts`.
+export const SEDARIM: SederDefinition[] = _require("../data/tractates.json");

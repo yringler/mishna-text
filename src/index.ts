@@ -48,7 +48,7 @@ export const MAKKOT:       Tractate = _require("../data/makkot.json");
 export const SHEVUOT:      Tractate = _require("../data/shevuot.json");
 export const EDUYOT:       Tractate = _require("../data/eduyot.json");
 export const AVODAH_ZARAH: Tractate = _require("../data/avodah-zarah.json");
-export const AVOT:         Tractate = _require("../data/avot.json");
+export const PIRKEI_AVOT:  Tractate = _require("../data/pirkei-avot.json");
 export const HORAYOT:      Tractate = _require("../data/horayot.json");
 
 export const ZEVACHIM:     Tractate = _require("../data/zevachim.json");
@@ -63,8 +63,8 @@ export const TAMID:        Tractate = _require("../data/tamid.json");
 export const MIDDOT:       Tractate = _require("../data/middot.json");
 export const KINNIM:       Tractate = _require("../data/kinnim.json");
 
-export const KEILIM:       Tractate = _require("../data/keilim.json");
-export const OHALOT:       Tractate = _require("../data/ohalot.json");
+export const KELIM:        Tractate = _require("../data/kelim.json");
+export const OHOLOT:       Tractate = _require("../data/oholot.json");
 export const NEGAIM:       Tractate = _require("../data/negaim.json");
 export const PARAH:        Tractate = _require("../data/parah.json");
 export const TAHOROT:      Tractate = _require("../data/tahorot.json");
@@ -80,7 +80,7 @@ export const ALL_TRACTATES: Tractate[] = [
   BERAKHOT, PEAH, DEMAI, KILAYIM, SHEVIIT, TERUMOT, MAASROT, MAASER_SHENI, CHALLAH, ORLAH, BIKKURIM,
   SHABBAT, ERUVIN, PESACHIM, SHEKALIM, YOMA, SUKKAH, BEITZAH, ROSH_HASHANAH, TAANIT, MEGILLAH, MOED_KATAN, CHAGIGAH,
   YEVAMOT, KETUBOT, NEDARIM, NAZIR, SOTAH, GITTIN, KIDDUSHIN,
-  BAVA_KAMMA, BAVA_METZIA, BAVA_BATRA, SANHEDRIN, MAKKOT, SHEVUOT, EDUYOT, AVODAH_ZARAH, AVOT, HORAYOT,
+  BAVA_KAMMA, BAVA_METZIA, BAVA_BATRA, SANHEDRIN, MAKKOT, SHEVUOT, EDUYOT, AVODAH_ZARAH, PIRKEI_AVOT, HORAYOT,
   ZEVACHIM, MENACHOT, CHULLIN, BEKHOROT, ARAKHIN, TEMURAH, KERITOT, MEILAH, TAMID, MIDDOT, KINNIM,
-  KEILIM, OHALOT, NEGAIM, PARAH, TAHOROT, MIKVAOT, NIDDAH, MAKHSHIRIN, ZAVIM, TEVUL_YOM, YADAYIM, OKTZIN,
+  KELIM, OHOLOT, NEGAIM, PARAH, TAHOROT, MIKVAOT, NIDDAH, MAKHSHIRIN, ZAVIM, TEVUL_YOM, YADAYIM, OKTZIN,
 ];

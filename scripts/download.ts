@@ -1,7 +1,7 @@
 import { writeFileSync, mkdirSync } from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
-import { SEDARIM } from "../src/tractates.js";
+import type { SederDefinition, TractateDefinition } from "../src/tractates.js";
 import type { Tractate, Perek, Mishna } from "../src/types.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -30,6 +30,75 @@ interface SefariaIndexSchema {
 interface SefariaTextResponse {
   text: string[] | string[][];
   he: string[] | string[][];
+}
+
+// Shape of the nodes returned by the Sefaria TOC endpoint (`/api/index/`).
+interface SefariaTocCategory {
+  category: string;
+  heCategory: string;
+  order?: number;
+  contents: SefariaTocNode[];
+}
+interface SefariaTocTractate {
+  title: string;
+  heTitle: string;
+  order?: number;
+}
+type SefariaTocNode = SefariaTocCategory | SefariaTocTractate;
+
+function isCategory(node: SefariaTocNode): node is SefariaTocCategory {
+  return "contents" in node;
+}
+
+function byOrder(a: { order?: number }, b: { order?: number }): number {
+  return (a.order ?? 0) - (b.order ?? 0);
+}
+
+function stripPrefix(text: string, ...prefixes: string[]): string {
+  for (const p of prefixes) {
+    if (text.startsWith(p)) return text.slice(p.length);
+  }
+  return text;
+}
+
+// Builds the seder/tractate structure from Sefaria's table of contents instead
+// of hardcoding it. Writes nothing; the caller persists the result.
+async function fetchSedarim(): Promise<SederDefinition[]> {
+  const toc = await fetchJson<SefariaTocNode[]>(`${BASE_URL}/index/`);
+  const mishnah = toc.find(
+    (n): n is SefariaTocCategory => isCategory(n) && n.category === "Mishnah"
+  );
+  if (!mishnah) throw new Error("Could not find Mishnah category in Sefaria TOC");
+
+  const sedarim: SederDefinition[] = [];
+  for (const node of [...mishnah.contents].sort(byOrder)) {
+    // The Mishnah node also contains commentary categories; keep only sedarim.
+    if (!isCategory(node) || !node.category.startsWith("Seder ")) continue;
+
+    const tractates: TractateDefinition[] = [];
+    for (const t of [...node.contents].sort(byOrder)) {
+      if (isCategory(t)) continue; // tractates are leaf nodes
+      const name = stripPrefix(t.title, "Mishnah ");
+      // Drop apostrophes so `key` stays filesystem-friendly and `exportName`
+      // is a valid JS identifier (e.g. "Ta'anit" -> "taanit" / "TAANIT").
+      const slug = name.replace(/['’]/g, "");
+      tractates.push({
+        name,
+        hebrewName: stripPrefix(t.heTitle, "משנה "),
+        sefariaId: t.title.replace(/ /g, "_"),
+        key: slug.toLowerCase().replace(/\s+/g, "-"),
+        exportName: slug.toUpperCase().replace(/\s+/g, "_"),
+      });
+    }
+
+    sedarim.push({
+      name: stripPrefix(node.category, "Seder "),
+      hebrewName: stripPrefix(node.heCategory, "סדר "),
+      tractates,
+    });
+  }
+
+  return sedarim;
 }
 
 async function fetchJson<T>(url: string): Promise<T> {
@@ -88,7 +157,15 @@ async function fetchChapter(sefariaId: string, chapter: number): Promise<Perek |
 async function main() {
   mkdirSync(DATA_DIR, { recursive: true });
 
-  for (const seder of SEDARIM) {
+  console.log("Fetching tractate list from Sefaria...");
+  const sedarim = await fetchSedarim();
+  writeFileSync(
+    join(DATA_DIR, "tractates.json"),
+    JSON.stringify(sedarim, null, 2),
+    "utf-8"
+  );
+
+  for (const seder of sedarim) {
     console.log(`\nSeder: ${seder.name}`);
     for (const tractDef of seder.tractates) {
       console.log(`  ${tractDef.name}...`);
